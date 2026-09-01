@@ -1,31 +1,31 @@
 # Heat-Map
 
-Interpolation and 3D visualization of temperature sensor grids, written during a lab practicum at **OSTA Lab, Hanyang University** (Feb–Jun 2023) on optical frequency domain reflectometry (OFDR) for distributed temperature sensing on Li-ion battery cells.
+Interpolation and 3D visualization of a coarse sensor grid, including mapping it onto a cylinder and closing the seam.
 
-An OFDR fiber gives temperature readings at discrete points along its length. Wrapped around a cell, that becomes a coarse grid of samples that has to be turned into a continuous surface before anyone can see where the cell is getting hot.
+Written during a lab practicum at **OSTA Lab, Hanyang University** (2023), on measuring battery cell temperature distribution with an optical fiber sensor — optical frequency domain reflectometry (OFDR) for distributed temperature sensing.
 
-These scripts run on a 5×10 randomly generated array rather than the lab's measurements, so the method can be shown without publishing unpublished experimental data.
+All four scripts run on a 5×10 array of random values (`np.random.random((5, 10))`) rather than measurement data, so they show the method rather than any result.
 
-## Scripts
+## The scripts
+
+Each one interpolates the coarse grid with `scipy.interpolate.griddata` and plots the result. The recurring comparison is **linear against cubic** interpolation.
 
 | Script | What it does |
 | --- | --- |
-| `Interpolation_of_a_5x10_random_array.py` | Interpolates the coarse 5×10 grid into a smooth 2D temperature field |
-| `Interpolation_and_3Dvisualization_of_a_5x10_random_array.py` | Same interpolation, rendered as a 3D surface |
-| `Visualization_of_a_5x10_random_array_on_a_cylinder.py` | Maps the grid onto a cylinder — the geometry of a cylindrical cell with fiber wrapped around it |
-| `Visualization_of_a_5x10_random_array_on_a_cylinder_with_seam_interpolation.py` | Same, but interpolating across the seam so the surface is continuous all the way around |
+| `Interpolation_of_a_5x10_random_array.py` | Interpolates onto a 50×100 grid and shows three stacked `imshow` panels: original, linear, cubic |
+| `Interpolation_and_3Dvisualization_of_a_5x10_random_array.py` | Same comparison on a 100×200 grid, drawn as a 3D scatter plot |
+| `Visualization_of_a_5x10_random_array_on_a_cylinder.py` | Wraps the grid onto a cylinder — the 5 rows map around the circumference, the 10 columns become height — and plots linear and cubic side by side |
+| `Visualization_of_a_5x10_random_array_on_a_cylinder_with_seam_interpolation.py` | The same cylinder, but interpolated across the seam |
 
-## Why the seam matters
+## The seam
 
-A fiber wrapped around a cylinder produces a grid whose first and last columns are physically adjacent — they are neighbours on the cell even though they sit at opposite ends of the array. Interpolating the flat array leaves a visible discontinuity along that line.
+A fiber wrapped around a cylinder produces a grid whose first and last rows are physically adjacent: on the cell they are neighbours, even though they sit at opposite ends of the array. Interpolating the array as-is leaves a discontinuity along that line.
 
-The seam-interpolation version treats the horizontal axis as periodic, so the surface closes cleanly and the wrap line stops being an artifact.
+The seam version appends the first row to the end of the array before interpolating, so the surface closes continuously all the way around.
 
 ## Running
 
 ```bash
-pip install numpy scipy matplotlib
+pip install numpy pandas scipy matplotlib
 python Interpolation_and_3Dvisualization_of_a_5x10_random_array.py
 ```
-
-The lab work itself was done in MATLAB; these are the Python re-implementations of the visualization method.
