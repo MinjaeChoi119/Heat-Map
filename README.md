@@ -2,7 +2,7 @@
 
 Interpolation and 3D visualization of temperature sensor grids, written during a lab practicum at **OSTA Lab, Hanyang University** (Feb–Jun 2023) on optical frequency domain reflectometry (OFDR) for distributed temperature sensing on Li-ion battery cells.
 
-An OFDR fiber gives temperature readings at discrete points along its length. Wrapped around a cell, that becomes a coarse grid of samples that has to be turned into a continuous surface before anyone can see where the cell is actually getting hot.
+An OFDR fiber gives temperature readings at discrete points along its length. Wrapped around a cell, that becomes a coarse grid of samples that has to be turned into a continuous surface before anyone can see where the cell is getting hot.
 
 These scripts run on a 5×10 randomly generated array rather than the lab's measurements, so the method can be shown without publishing unpublished experimental data.
 
@@ -17,7 +17,7 @@ These scripts run on a 5×10 randomly generated array rather than the lab's meas
 
 ## Why the seam matters
 
-A fiber wrapped around a cylinder produces a grid whose first and last columns are physically adjacent — they are neighbours on the cell even though they sit at opposite ends of the array. Interpolating the flat array leaves a visible discontinuity down that line, and it lands exactly where a reader would otherwise look for a hot spot.
+A fiber wrapped around a cylinder produces a grid whose first and last columns are physically adjacent — they are neighbours on the cell even though they sit at opposite ends of the array. Interpolating the flat array leaves a visible discontinuity along that line.
 
 The seam-interpolation version treats the horizontal axis as periodic, so the surface closes cleanly and the wrap line stops being an artifact.
 
